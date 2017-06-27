@@ -12,15 +12,16 @@ package logger
 import (
 	"io"
 	"log"
+	"os"
 )
 
 const (
 	//InfoPrefix info-logger prefix
-	InfoPrefix = "INFO"
+	InfoPrefix = "[INFO]"
 	//WarnPrefix warn-logger prefix
-	WarnPrefix = "WARN"
+	WarnPrefix = "[WARN]"
 	//ErrPrefix error-logger prefix
-	ErrPrefix = "ERROR"
+	ErrPrefix = "[ERROR]"
 )
 
 var (
@@ -31,6 +32,12 @@ var (
 	//Error do error-level logging
 	Error *log.Logger
 )
+
+func init() {
+	Info = log.New(os.Stdout, InfoPrefix, log.LstdFlags)
+	Warn = log.New(os.Stderr, WarnPrefix, log.LstdFlags)
+	Error = log.New(os.Stderr, ErrPrefix, log.LstdFlags)
+}
 
 //Init func init loggers
 func Init(infoHandle, warnHandle, errHandle io.Writer) {
