@@ -15,13 +15,15 @@ import (
 	"os"
 )
 
-const (
+var (
 	//InfoPrefix info-logger prefix
 	InfoPrefix = "[INFO]"
 	//WarnPrefix warn-logger prefix
 	WarnPrefix = "[WARN]"
 	//ErrPrefix error-logger prefix
 	ErrPrefix = "[ERROR]"
+	//DebugPrefix debug-logger prefix
+	DebugPrefix = "[DEBUG]"
 )
 
 var (
@@ -31,17 +33,21 @@ var (
 	Warn *log.Logger
 	//Error do error-level logging
 	Error *log.Logger
+	//Debug do debug-level logging
+	Debug *log.Logger
 )
 
 func init() {
 	Info = log.New(os.Stdout, InfoPrefix, log.LstdFlags)
 	Warn = log.New(os.Stderr, WarnPrefix, log.LstdFlags)
 	Error = log.New(os.Stderr, ErrPrefix, log.LstdFlags)
+	Debug = log.New(os.Stdout, DebugPrefix, log.LstdFlags)
 }
 
 //Init func init loggers
-func Init(infoHandle, warnHandle, errHandle io.Writer) {
+func Init(infoHandle, warnHandle, errHandle, debugHandle io.Writer) {
 	Info = log.New(infoHandle, InfoPrefix, log.LstdFlags)
 	Warn = log.New(warnHandle, WarnPrefix, log.LstdFlags)
 	Error = log.New(errHandle, ErrPrefix, log.LstdFlags)
+	Debug = log.New(debugHandle, DebugPrefix, log.LstdFlags)
 }
